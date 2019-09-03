@@ -7,7 +7,6 @@ CFLAGS = `root-config --cflags --libs`
 
 EXECUTABLE = main
 
-SOURCES = source/BTagCalibration.cc source/CMS_lumi.C source/PostFitScaler.cc source/analysisTools.cc source/eventSelection.cc source/eventWeight.cc source/fortest.C source/runCode.cc source/stringTools.cc source/systemTools.cc source/treeReader.cc
 OBJS=$(subst .cc,.o,$(SOURCES))
 
 all: main
