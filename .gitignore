@@ -1,0 +1,58 @@
+trainings/
+data/dumps/
+datacards/
+fileDummy.root
+main
+output.txt
+output/
+plotsForSave/
+myevents.txt
+tables/
+scripts/submit.sh.*
+skimTree
+sftp-config.json
+ttVcsMeasure.sublime-project
+ttVcsMeasure.sublime-workspace
+./*root
+*pdf
+scripts/makingUncPlots/*root
+scripts/.DS_Store
+runFR
+runFRInData
+runCT
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.swp
+*.swo
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
