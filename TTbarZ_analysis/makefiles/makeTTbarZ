@@ -7,7 +7,7 @@ CFLAGS = `root-config --cflags --libs`
 
 EXECUTABLE = main
 
-SOURCES = source/fortest.C
+SOURCES = source/fortest.cc
 
 OBJS=$(subst .cc,.o,$(SOURCES))
 
