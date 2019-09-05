@@ -70,61 +70,40 @@
 #include "TPaveText.h"
 #include "RooHist.h"
 #include "TLorentzVector.h"
-
 #include "../interface/treeReader.h"
 
 using namespace std;
 using namespace RooFit;
 using namespace RooStats;
 
+//=============================================================================================//
 
 int main(){
   
-
   //Get old file, old tree and set top branch address
   TFile *oldfile = new TFile("/afs/cern.ch/work/o/okara/TTbarZ/TTbarZ_analysis/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root");
-  //TFile *oldfile = new TFile("/user/moanwar/Run2016/CMSSW_8_0_29/src/HNL/HeavyNeutralLeptonAnalysis/test/signal/HNL_M5_mu_2.95.root");
   TTree *fChain = (TTree*)oldfile->Get("blackJackAndHookers/blackJackAndHookersTree");
 
-
-  //////selection cuts
-
-  Float_t isoCut = 0.15;
-  bool isMC = true;
-  float Zmass = 90;
-
-  //if I want to use a TChain.....
-  //cout<< "starting..."<<endl;
-  //TChain * fChain = new TChain("blackJackAndHookers/blackJackAndHookersTree",""); //okara
-
-  //oldtree->Add("/eos/cms/store/group/phys_exotica/HNL/Data/SingleMuon/crab_Run_2016B-v3_SingleMuon/Data_Analysis10.root/HeavyNeutralLepton/tree_");
-
 //=============================================================================================//
-
 
   char fileName[256];
   cout<<"Please enter the name of the output root file you want to create (yyy.root) : "<<endl;
   cin.getline(fileName,256);
   TFile *newfile = new TFile(fileName,"recreate");
 
-  //TFile *newfile = new TFile("skimmedSignale.root","recreate");
-  //Create a new file + a clone of old tree in new file 
-  //TTree *newtree = oldtree->CloneTree(0); 
-  TTree *newtree1  = new TTree("tree_4mu","Analysis Tree");
-  TTree *newtree2  = new TTree("tree_3mu1ele","Analysis Tree");
-  TTree *newtree3  = new TTree("tree_2mu2ele","Analysis Tree");
-  TTree *newtree4  = new TTree("tree_1mu3ele","Analysis Tree");
-  TTree *newtree5  = new TTree("tree_4ele","Analysis Tree");
-
-  //cout<<"cloning done"<<endl;
-
-  // Long64_t nentries = oldtree->GetEntries();
   Long64_t nentries = fChain->GetEntries();
   cout  <<nentries<<endl;
 
-//======================= Old Tree Variables ==========================================// 
-  // These are the variables I cut on 
-   // OZGUN ADD it 
+ //Histograms
+
+ TH1D *lepton_1stPt = new TH1D("lepton_1stPt", "", 100, 0, 500);
+ TH1D *lepton_2ndPt = new TH1D("lepton_2ndPt", "", 100, 0, 500);
+ TH1D *lepton_3rdPt = new TH1D("lepton_3rdPt", "", 100, 0, 500);
+ TH1D *lepton_4thPt = new TH1D("lepton_4thPt", "", 100, 0, 500);
+
+ //======================= Old Tree Variables ==========================================// 
+ // These are the variables I cut on 
+ // OZGUN ADD it 
 
 
    ULong64_t       _runNb;
@@ -268,7 +247,7 @@ int main(){
    UInt_t          _lProvenance[11];   //[_nL]
    UInt_t          _lProvenanceCompressed[11];   //[_nL]
 
-
+  //fChain start here 
 
    fChain->SetBranchAddress("_runNb", &_runNb);
    fChain->SetBranchAddress("_lumiBlock", &_lumiBlock);
@@ -410,20 +389,15 @@ int main(){
    fChain->SetBranchAddress("_gen_lIsPrompt", &b__gen_lIsPrompt);
    fChain->SetBranchAddress("_gen_partonPt", &b__gen_partonPt);
    fChain->SetBranchAddress"_lProvenanceCompressed", _lProvenanceCompressed, &b__lProvenanceCompressed);
-
  */
 
-
 //======================= Start the running over input branches ==========================================//
- //for (int i=0;i<fChain->GetEntries(); i++) {
- 
 
+for (int i=0;i<100000; i++) {
 
- for (int i=0;i<100000; i++) {
-
-   if (i%10000==0)       cout<<i<<endl;
-    fChain->GetEntry(i);
-    //    if (passIsoMu24All==0 && passIsoMu27All == 0) continue;  // cut on the trigger!
+	if (i%10000==0)       cout<<i<<endl;
+    	fChain->GetEntry(i);
+    	//    if (passIsoMu24All==0 && passIsoMu27All == 0) continue;  // cut on the trigger!
 
 
   	std::vector<unsigned> leptonIndex;
@@ -436,21 +410,21 @@ int main(){
 		}
 	}
   
-	cout << lCount << endl;
-  }
+	if (leptonIndex.size() == 4)
+	{
+		for(std::size_t l=0; l<leptonIndex.size(); ++l){
+			
+			lepton_1stPt->Fill(_lPt[leptonIndex[0]]);
+                        lepton_2ndPt->Fill(_lPt[leptonIndex[1]]);
+                        lepton_3rdPt->Fill(_lPt[leptonIndex[2]]);
+                        lepton_4thPt->Fill(_lPt[leptonIndex[3]]);
 
 
+		}
+	}
+}
 
- newfile->Write();  
- 
+newfile->Write();
 
- newtree1->AutoSave();
- newtree2->AutoSave();
- newtree3->AutoSave();
- newtree4->AutoSave();
- newtree5->AutoSave();
-
-  delete newfile;
-
-  return 0;
+return 0;
 }
