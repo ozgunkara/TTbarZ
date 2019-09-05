@@ -96,10 +96,10 @@ int main(){
 
  //Histograms
 
- TH1D *lepton_1stPt = new TH1D("lepton_1stPt", "", 100, 0, 500);
- TH1D *lepton_2ndPt = new TH1D("lepton_2ndPt", "", 100, 0, 500);
- TH1D *lepton_3rdPt = new TH1D("lepton_3rdPt", "", 100, 0, 500);
- TH1D *lepton_4thPt = new TH1D("lepton_4thPt", "", 100, 0, 500);
+ TH1D *lepton_1stPt = new TH1D("lepton_1stPt", "", 30, 0, 300);
+ TH1D *lepton_2ndPt = new TH1D("lepton_2ndPt", "", 30, 0, 300);
+ TH1D *lepton_3rdPt = new TH1D("lepton_3rdPt", "", 30, 0, 300);
+ TH1D *lepton_4thPt = new TH1D("lepton_4thPt", "", 30, 0, 300);
 
  //======================= Old Tree Variables ==========================================// 
  // These are the variables I cut on 
@@ -423,6 +423,20 @@ for (int i=0;i<100000; i++) {
 		}
 	}
 }
+
+
+//histogram styles //
+
+//gStyle->SetOptStat(0);
+
+lepton_1stPt->SetXTitle("p_{T} [GeV]");
+lepton_1stPt->SetYTitle("Number Of Event");
+lepton_2ndPt->SetXTitle("p_{T} [GeV]");
+lepton_2ndPt->SetYTitle("Number Of Event");
+lepton_3rdPt->SetXTitle("p_{T} [GeV]");
+lepton_3rdPt->SetYTitle("Number Of Event");
+lepton_4thPt->SetXTitle("p_{T} [GeV]");
+lepton_4thPt->SetYTitle("Number Of Event");
 
 newfile->Write();
 
