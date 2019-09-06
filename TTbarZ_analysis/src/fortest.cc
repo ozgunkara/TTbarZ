@@ -401,14 +401,26 @@ for (int i=0;i<100000; i++) {
 
 
   	std::vector<unsigned> leptonIndex;
+
+        std::vector<pair<double,unsigned>> ptMap;
+
+
 	unsigned lCount = 0;
 	
 	for(unsigned l = 0; l < _nLight; l++){
 		if(_lPt[l] > 10){
 			lCount++;
-			leptonIndex.push_back(l);		
+			ptMap.push_back({_lPt[l], l});
+			//leptonIndex.push_back(l);		
 		}
 	}
+
+	std::sort(ptMap.begin(), ptMap.end(), [](const std::pair<double, unsigned>& p1, const std::pair<double, unsigned>& p2){return p1.first > p2.first;} );
+
+	for(unsigned l=0; l < lCount; l++){
+		leptonIndex.push_back(ptMap[l].second);
+	}
+	
   
 	if (leptonIndex.size() == 4)
 	{
@@ -418,6 +430,9 @@ for (int i=0;i<100000; i++) {
                         lepton_2ndPt->Fill(_lPt[leptonIndex[1]]);
                         lepton_3rdPt->Fill(_lPt[leptonIndex[2]]);
                         lepton_4thPt->Fill(_lPt[leptonIndex[3]]);
+
+			std::cout << " 1st " << _lPt[leptonIndex[0]] << " 2nd " << _lPt[leptonIndex[1]] << " 3rd " << _lPt[leptonIndex[2]] << " 4th " << _lPt[leptonIndex[3]] << endl; 
+
 
 
 		}
