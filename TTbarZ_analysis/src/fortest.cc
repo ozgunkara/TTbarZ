@@ -429,13 +429,13 @@ for (int i=0;i<100000; i++) {
 
 //gStyle->SetOptStat(0);
 
-lepton_1stPt->SetXTitle("p_{T} [GeV]");
+lepton_1stPt->SetXTitle("Leading Lepton p_{T} [GeV]");
 lepton_1stPt->SetYTitle("Number Of Event");
-lepton_2ndPt->SetXTitle("p_{T} [GeV]");
+lepton_2ndPt->SetXTitle("SubLeading Lepton p_{T} [GeV]");
 lepton_2ndPt->SetYTitle("Number Of Event");
-lepton_3rdPt->SetXTitle("p_{T} [GeV]");
+lepton_3rdPt->SetXTitle("3rd Lepton p_{T} [GeV]");
 lepton_3rdPt->SetYTitle("Number Of Event");
-lepton_4thPt->SetXTitle("p_{T} [GeV]");
+lepton_4thPt->SetXTitle("4th Lepton p_{T} [GeV]");
 lepton_4thPt->SetYTitle("Number Of Event");
 
 newfile->Write();
