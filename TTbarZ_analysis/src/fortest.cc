@@ -7,7 +7,7 @@
 #ifndef __CINT__
 #include "RooGlobalFunc.h"
 //------------------------------------------------
-     
+
 #endif
 #include "RooMCStudy.h"
 #include "RooFitResult.h"
@@ -78,32 +78,46 @@ using namespace RooStats;
 
 //=============================================================================================//
 
-int main(){
-  
-  //Get old file, old tree and set top branch address
-  TFile *oldfile = new TFile("/afs/cern.ch/work/o/okara/TTbarZ/TTbarZ_analysis/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root");
-  TTree *fChain = (TTree*)oldfile->Get("blackJackAndHookers/blackJackAndHookersTree");
+int main() {
+
+   //Get old file, old tree and set top branch address
+   TFile *oldfile = new TFile("/afs/cern.ch/work/o/okara/TTbarZ/TTbarZ_analysis/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root");
+   TTree *fChain = (TTree*)oldfile->Get("blackJackAndHookers/blackJackAndHookersTree");
 
 //=============================================================================================//
 
-  char fileName[256];
-  cout<<"Please enter the name of the output root file you want to create (yyy.root) : "<<endl;
-  cin.getline(fileName,256);
-  TFile *newfile = new TFile(fileName,"recreate");
+   char fileName[256];
+   cout << "Please enter the name of the output root file you want to create (yyy.root) : " << endl;
+   cin.getline(fileName, 256);
+   TFile *newfile = new TFile(fileName, "recreate");
 
-  Long64_t nentries = fChain->GetEntries();
-  cout  <<nentries<<endl;
+   Long64_t nentries = fChain->GetEntries();
+   cout  << nentries << endl;
 
- //Histograms
+//Histograms
 
- TH1D *lepton_1stPt = new TH1D("lepton_1stPt", "", 30, 0, 300);
- TH1D *lepton_2ndPt = new TH1D("lepton_2ndPt", "", 30, 0, 300);
- TH1D *lepton_3rdPt = new TH1D("lepton_3rdPt", "", 30, 0, 300);
- TH1D *lepton_4thPt = new TH1D("lepton_4thPt", "", 30, 0, 300);
+   TH1D *lepton_1stPt = new TH1D("lepton_1stPt", "", 30, 0, 300);
+   TH1D *lepton_2ndPt = new TH1D("lepton_2ndPt", "", 30, 0, 300);
+   TH1D *lepton_3rdPt = new TH1D("lepton_3rdPt", "", 30, 0, 300);
+   TH1D *lepton_4thPt = new TH1D("lepton_4thPt", "", 30, 0, 300);
 
- //======================= Old Tree Variables ==========================================// 
- // These are the variables I cut on 
- // OZGUN ADD it 
+//Lorentz Vectors
+   TLorentzVector mu1;
+   TLorentzVector mu2;
+   TLorentzVector mu3;
+   TLorentzVector mu4;
+
+   TLorentzVector ele1;
+   TLorentzVector ele2;
+   TLorentzVector ele3;
+   TLorentzVector ele4;
+
+
+
+
+//======================= Old Tree Variables ==========================================//
+// These are the variables I cut on
+// OZGUN ADD it
 
 
    ULong64_t       _runNb;
@@ -247,7 +261,7 @@ int main(){
    UInt_t          _lProvenance[11];   //[_nL]
    UInt_t          _lProvenanceCompressed[11];   //[_nL]
 
-  //fChain start here 
+   //fChain start here
 
    fChain->SetBranchAddress("_runNb", &_runNb);
    fChain->SetBranchAddress("_lumiBlock", &_lumiBlock);
@@ -373,87 +387,165 @@ int main(){
    fChain->SetBranchAddress("_lIsPrompt", &_lIsPrompt);
    fChain->SetBranchAddress("_lMatchPdgId", &_lMatchPdgId);
    fChain->SetBranchAddress("_lMomPdgId", &_lMomPdgId);
-  /*
-   fChain->SetBranchAddress("_weight", &_weight, &b__weight);
-   fChain->SetBranchAddress("_nTrueInt", &b__nTrueInt);
-   fChain->SetBranchAddress("_gen_met", &_gen_met, &b__gen_met);
-   fChain->SetBranchAddress("_gen_metPhi", &_gen_metPhi, &b__gen_metPhi);
-   fChain->SetBranchAddress("_gen_nL", &_gen_nL, &b__gen_nL);
-   fChain->SetBranchAddress("_gen_lPt", _gen_lPt, &b__gen_lPt);
-   fChain->SetBranchAddress("_gen_lEta", _gen_lEta, &b__gen_lEta);
-   fChain->SetBranchAddress("_gen_lPhi", _gen_lPhi, &b__gen_lPhi);
-   fChain->SetBranchAddress("_gen_lE", _gen_lE, &b__gen_lE);
-   fChain->SetBranchAddress("_gen_lFlavor", _gen_lFlavor, &b__gen_lFlavor);
-   fChain->SetBranchAddress("_gen_lCharge", _gen_lCharge, &b__gen_lCharge);
-   fChain->SetBranchAddress("_gen_lMomPdg", _gen_lMomPdg, &b__gen_lMomPdg);
-   fChain->SetBranchAddress("_gen_lIsPrompt", &b__gen_lIsPrompt);
-   fChain->SetBranchAddress("_gen_partonPt", &b__gen_partonPt);
-   fChain->SetBranchAddress"_lProvenanceCompressed", _lProvenanceCompressed, &b__lProvenanceCompressed);
- */
+   /*
+    fChain->SetBranchAddress("_weight", &_weight, &b__weight);
+    fChain->SetBranchAddress("_nTrueInt", &b__nTrueInt);
+    fChain->SetBranchAddress("_gen_met", &_gen_met, &b__gen_met);
+    fChain->SetBranchAddress("_gen_metPhi", &_gen_metPhi, &b__gen_metPhi);
+    fChain->SetBranchAddress("_gen_nL", &_gen_nL, &b__gen_nL);
+    fChain->SetBranchAddress("_gen_lPt", _gen_lPt, &b__gen_lPt);
+    fChain->SetBranchAddress("_gen_lEta", _gen_lEta, &b__gen_lEta);
+    fChain->SetBranchAddress("_gen_lPhi", _gen_lPhi, &b__gen_lPhi);
+    fChain->SetBranchAddress("_gen_lE", _gen_lE, &b__gen_lE);
+    fChain->SetBranchAddress("_gen_lFlavor", _gen_lFlavor, &b__gen_lFlavor);
+    fChain->SetBranchAddress("_gen_lCharge", _gen_lCharge, &b__gen_lCharge);
+    fChain->SetBranchAddress("_gen_lMomPdg", _gen_lMomPdg, &b__gen_lMomPdg);
+    fChain->SetBranchAddress("_gen_lIsPrompt", &b__gen_lIsPrompt);
+    fChain->SetBranchAddress("_gen_partonPt", &b__gen_partonPt);
+    fChain->SetBranchAddress"_lProvenanceCompressed", _lProvenanceCompressed, &b__lProvenanceCompressed);
+   */
 
 //======================= Start the running over input branches ==========================================//
 
-for (int i=0;i<100000; i++) {
+   for (int i = 0; i < 100000; i++) {
 
-	if (i%10000==0)       cout<<i<<endl;
-    	fChain->GetEntry(i);
-    	//    if (passIsoMu24All==0 && passIsoMu27All == 0) continue;  // cut on the trigger!
-
-
-  	std::vector<unsigned> leptonIndex;
-
-        std::vector<pair<double,unsigned>> ptMap;
+      if (i % 10000 == 0)       cout << i << endl;
+      fChain->GetEntry(i);
+      //    if (passIsoMu24All==0 && passIsoMu27All == 0) continue;  // cut on the trigger!
 
 
-	unsigned lCount = 0;
-	
-	for(unsigned l = 0; l < _nLight; l++){
-		if(_lPt[l] > 10){
-			lCount++;
-			ptMap.push_back({_lPt[l], l});
-			//leptonIndex.push_back(l);		
-		}
-	}
-
-	std::sort(ptMap.begin(), ptMap.end(), [](const std::pair<double, unsigned>& p1, const std::pair<double, unsigned>& p2){return p1.first > p2.first;} );
-
-	for(unsigned l=0; l < lCount; l++){
-		leptonIndex.push_back(ptMap[l].second);
-	}
-	
-  
-	if (leptonIndex.size() == 4)
-	{
-		for(std::size_t l=0; l<leptonIndex.size(); ++l){
-			
-			lepton_1stPt->Fill(_lPt[leptonIndex[0]]);
-                        lepton_2ndPt->Fill(_lPt[leptonIndex[1]]);
-                        lepton_3rdPt->Fill(_lPt[leptonIndex[2]]);
-                        lepton_4thPt->Fill(_lPt[leptonIndex[3]]);
-
-			std::cout << " 1st " << _lPt[leptonIndex[0]] << " 2nd " << _lPt[leptonIndex[1]] << " 3rd " << _lPt[leptonIndex[2]] << " 4th " << _lPt[leptonIndex[3]] << endl; 
+      std::vector<unsigned> leptonIndex;
+      std::vector<pair<double, unsigned>> ptMap;
 
 
+      unsigned lCount = 0;
 
-		}
-	}
-}
+      for (unsigned l = 0; l < _nLight; l++) {
+         lCount++;
+         ptMap.push_back({_lPt[l], l});
+      }
+
+      std::sort(ptMap.begin(), ptMap.end(), [](const std::pair<double, unsigned>& p1, const std::pair<double, unsigned>& p2) {return p1.first > p2.first;} );
+
+      for (unsigned l = 0; l < lCount; l++) {
+         leptonIndex.push_back(ptMap[l].second);
+      }
+
+
+      if (leptonIndex.size() == 4) {
+
+         if (_lPt[leptonIndex[0]] < 40. || _lPt[leptonIndex[1]] < 10. || _lPt[leptonIndex[2]] < 10. || _lPt[leptonIndex[3]] < 10.) continue;
+
+         for (std::size_t l = 0; l < leptonIndex.size(); ++l) {
+
+            if (_lFlavor[l] == 1 && _leptonMvatZqTTV[l] > - 0.4 )
+            {
+               mu1.SetPtEtaPhiE(_lPt[0], _lEta[0], _lPhi[0], _lE[0]);
+               mu2.SetPtEtaPhiE(_lPt[1], _lEta[1], _lPhi[1], _lE[1]);
+               mu3.SetPtEtaPhiE(_lPt[2], _lEta[2], _lPhi[2], _lE[2]);
+               mu4.SetPtEtaPhiE(_lPt[3], _lEta[3], _lPhi[3], _lE[3]);
+
+               float mu1Charge = -_lCharge[0];
+               float mu2Charge = -_lCharge[1];
+               float mu3Charge = -_lCharge[2];
+               float mu4Charge = -_lCharge[3];
+
+               float DiMuMass1 = 0.;
+               float DiMuMass2 = 0.;
+               float DiMuMass3 = 0.;
+               float DiMuMass4 = 0.;
+               float DiMuMass5 = 0.;
+               float DiMuMass6 = 0.;
+
+               if (((mu1Charge + mu2Charge) == 0)) DiMuMass1  = (mu1 + mu2).M();
+               if (((mu1Charge + mu3Charge) == 0)) DiMuMass2  = (mu1 + mu3).M();
+               if (((mu1Charge + mu4Charge) == 0)) DiMuMass3  = (mu1 + mu4).M();
+               if (((mu2Charge + mu3Charge) == 0)) DiMuMass4  = (mu2 + mu3).M();
+               if (((mu2Charge + mu4Charge) == 0)) DiMuMass5  = (mu2 + mu4).M();
+               if (((mu3Charge + mu4Charge) == 0)) DiMuMass6  = (mu3 + mu4).M();
+
+               if (DiMuMass1 > 71. && DiMuMass1 < 111.)
+               {
+                  cout << "1stMu pair: " << DiMuMass1 << endl;
+                  cout << "2ndMu pair: " << DiMuMass2 << endl;
+                  cout << "3rtMu pair: " << DiMuMass3 << endl;
+                  cout << "4thMu pair: " << DiMuMass4 << endl;
+                  cout << "5thMu pair: " << DiMuMass5 << endl;
+                  cout << "6thMu pair: " << DiMuMass6 << endl;
+               }
+
+
+
+            }
+
+            if (_lFlavor[l] == 0 && _leptonMvatZqTTV[l] > - 0.4 )
+            {
+               ele1.SetPtEtaPhiE(_lPt[0], _lEta[0], _lPhi[0], _lE[0]);
+               ele2.SetPtEtaPhiE(_lPt[1], _lEta[1], _lPhi[1], _lE[1]);
+               ele3.SetPtEtaPhiE(_lPt[2], _lEta[2], _lPhi[2], _lE[2]);
+               ele4.SetPtEtaPhiE(_lPt[3], _lEta[3], _lPhi[3], _lE[3]);
+
+               float ele1Charge = -_lCharge[0];
+               float ele2Charge = -_lCharge[1];
+               float ele3Charge = -_lCharge[2];
+               float ele4Charge = -_lCharge[3];
+
+               float DiEleMass1 = 0.;
+               float DiEleMass2 = 0.;
+               float DiEleMass3 = 0.;
+               float DiEleMass4 = 0.;
+               float DiEleMass5 = 0.;
+               float DiEleMass6 = 0.;
+
+
+               if (((ele1Charge + ele2Charge) == 0)) DiEleMass1  = (ele1 + ele2).M();
+               if (((ele1Charge + ele3Charge) == 0)) DiEleMass2  = (ele1 + ele3).M();
+               if (((ele1Charge + ele4Charge) == 0)) DiEleMass3  = (ele1 + ele4).M();
+               if (((ele2Charge + ele3Charge) == 0)) DiEleMass4  = (ele2 + ele3).M();
+               if (((ele2Charge + ele4Charge) == 0)) DiEleMass5  = (ele2 + ele4).M();
+               if (((ele3Charge + ele4Charge) == 0)) DiEleMass6  = (ele3 + ele4).M();
+
+
+               if (DiEleMass1 > 71. && DiEleMass1 < 111.)
+               {
+                  cout << "1stE pair: " << DiEleMass1 << endl;
+                  cout << "2ndE pair: " << DiEleMass2 << endl;
+                  cout << "3rtE pair: " << DiEleMass3 << endl;
+                  cout << "4thE pair: " << DiEleMass4 << endl;
+                  cout << "5thE pair: " << DiEleMass5 << endl;
+                  cout << "6thE pair: " << DiEleMass6 << endl;
+
+
+               }
+
+
+            }
+
+            lepton_1stPt->Fill(_lPt[leptonIndex[0]]);
+            lepton_2ndPt->Fill(_lPt[leptonIndex[1]]);
+            lepton_3rdPt->Fill(_lPt[leptonIndex[2]]);
+            lepton_4thPt->Fill(_lPt[leptonIndex[3]]);
+
+            //std::cout << " 1st " << _lPt[leptonIndex[0]] << " 2nd " << _lPt[leptonIndex[1]] << " 3rd " << _lPt[leptonIndex[2]] << " 4th " << _lPt[leptonIndex[3]] << endl;
+         }
+      }
+   }
 
 
 //histogram styles //
 
 //gStyle->SetOptStat(0);
 
-lepton_1stPt->SetXTitle("Leading Lepton p_{T} [GeV]");
-lepton_1stPt->SetYTitle("Number Of Event");
-lepton_2ndPt->SetXTitle("SubLeading Lepton p_{T} [GeV]");
-lepton_2ndPt->SetYTitle("Number Of Event");
-lepton_3rdPt->SetXTitle("3rd Lepton p_{T} [GeV]");
-lepton_3rdPt->SetYTitle("Number Of Event");
-lepton_4thPt->SetXTitle("4th Lepton p_{T} [GeV]");
-lepton_4thPt->SetYTitle("Number Of Event");
+   lepton_1stPt->SetXTitle("Leading Lepton p_{T} [GeV]");
+   lepton_1stPt->SetYTitle("Number Of Event");
+   lepton_2ndPt->SetXTitle("SubLeading Lepton p_{T} [GeV]");
+   lepton_2ndPt->SetYTitle("Number Of Event");
+   lepton_3rdPt->SetXTitle("3rd Lepton p_{T} [GeV]");
+   lepton_3rdPt->SetYTitle("Number Of Event");
+   lepton_4thPt->SetXTitle("4th Lepton p_{T} [GeV]");
+   lepton_4thPt->SetYTitle("Number Of Event");
 
-newfile->Write();
+   newfile->Write();
 
-return 0;
+   return 0;
 }
