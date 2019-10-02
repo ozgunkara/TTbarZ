@@ -1,3 +1,4 @@
+#sample |cut| tree | isSignal | isData | xSec | Linecolor | fillstyle | lineStyle | lineWidth | stack | label | isAdd
 tZq_ll_4f_13TeV-amcatnlo-pythia8_Summer16.root |1  |v0| 0 |0|  0.09418  | kRed  | 632  | 1 | 1 | 10 | tZq | 1
 TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root | 1 |v0| 0 |0|0.2529| kGreen  | 416  | 1 | 1 | 10 | TTZ | 1
 ZZTo4L_13TeV_powheg_pythia8_Summer16.root | 1 |v0| 0 |0|1.3816| kBlue  | 600  | 1 | 1 | 10 | ZZ4L | 1
