@@ -1,5 +1,7 @@
 //**********************************************************************************************************************************
+// Remove some branches + selects the events + add variables -- for muonic channel
 //***************************************** To Compile******************************************************************************
+// g++ -g -std=c++11 -Wl,--no-as-needed `root-config --cflags` `root-config --libs` -lMinuit CloneTree.C -o CloneTree.exe
 //**********************************************************************************************************************************
 
 #ifndef __CINT__
@@ -79,6 +81,7 @@ int main(){
 
   //Get old file, old tree and set top branch address
   //TFile *oldfile = new TFile("/afs/cern.ch/work/o/okara/TTbarZ/TTbarZ_analysis/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root");
+  //TFile *oldfile = new TFile("/user/moanwar/Run2016/CMSSW_8_0_29/src/HNL/HeavyNeutralLeptonAnalysis/test/signal/HNL_M5_mu_2.95.root");
   
 
   TChain *fChain = new TChain("blackJackAndHookers/blackJackAndHookersTree","");
@@ -87,90 +90,102 @@ int main(){
   string tree = "blackJackAndHookers/blackJackAndHookersTree";
 
 
-  string fileName ="ZZTo4L_13TeV_powheg_pythia8_Summer16.root";
-  /*string fileName = "DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
-  string fileName = "DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
-  string fileName = "DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
-  string fileName = "DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
-  string fileName = "GluGluHToWWTo2L2Nu_M125_13TeV_amcatnloFXFX_pythia8_Summer16.root" ;
-  string fileName = "GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_Summer16.root" ;
-  string fileName = "GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8_Summer16.root" ;
-  string fileName = "GluGluToContinToZZTo2e2nu_13TeV_MCFM701_pythia8_Summer16.root" ;
-  string fileName = "GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8_Summer16.root" ;
-  string fileName = "GluGluToContinToZZTo2mu2nu_13TeV_MCFM701_pythia8_Summer16.root" ;
-  string fileName = "GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8_Summer16.root" ;
-  string fileName = "GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8_Summer16.root" ;
-  string fileName = "GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8_Summer16.root" ;
-  string fileName = "GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8_Summer16.root" ;
-  string fileName = "GluGluWWTo2L2Nu_MCFM_13TeV_Summer16.root" ;
-  string fileName = "GluGluZH_HToWW_M125_13TeV_powheg_pythia8_Summer16.root" ;
-  string fileName = "ST_s-channel_4f_InclusiveDecays_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1_Summer16.root" ;
-  string fileName = "ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1_Summer16.root" ;
-  string fileName = "ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1_Summer16.root" ;
-  string fileName = "ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1_Summer16.root" ;
-  string fileName = "ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1_Summer16.root" ;
-  string fileName = "ST_tWll_5f_LO_13TeV-MadGraph-pythia8_Summer16.root" ;
-  string fileName = "ST_tWll_5f_LO_13TeV_MadGraph_pythia8_Summer16.root" ;
-  string fileName = "ST_tWnunu_5f_LO_13TeV-MadGraph-pythia8_Summer16.root" ;
-  string fileName = "TGJets_TuneCUETP8M1_13TeV_amcatnlo_madspin_pythia8_Summer16.root" ;
-  string fileName = "THQ_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1_Summer16.root" ;
-  string fileName = "THW_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1_Summer16.root" ;
-  string fileName = "TTGG_0Jets_TuneCUETP8M1_13TeV_amcatnlo_madspin_pythia8_Summer16.root" ;
-  string fileName = "TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_Summer16.root" ;
-  string fileName = "TTJets_DiLept_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
-  string fileName = "TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
-  string fileName = "TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
-  string fileName = "TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_Summer16.root" ;
-  string fileName = "TTWJetsToQQ_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_Summer16.root" ; 
-  string fileName = "TTWW_TuneCUETP8M2T4_13TeV-madgraph-pythia8_Summer16.root" ;
-  string fileName = "TTWZ_TuneCUETP8M2T4_13TeV-madgraph-pythia8_Summer16.root" ;
-  string fileName = "TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "TTZToLL_M-1to10_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
-  string fileName = "TTZZ_TuneCUETP8M2T4_13TeV-madgraph-pythia8_Summer16.root" ;
-  string fileName = "TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_Summer16.root" ;
-  string fileName = "TT_TuneCUETP8M2T4_GluonMoveCRTune_13TeV-powheg-pythia8_Summer16.root" ;
-  string fileName = "TT_TuneCUETP8M2T4_QCDbasedCRTune_erdON_13TeV-powheg-pythia8_Summer16.root" ;
-  string fileName = "TT_TuneCUETP8M2T4_erdON_13TeV-powheg-pythia8_Summer16.root" ;
-  string fileName = "VBFHToWWTo2L2Nu_M125_13TeV_amcatnlo_pythia8_Summer16.root" ;
-  string fileName = "VBF_HToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_Summer16.root" ;
-  string fileName = "VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8_Summer16.root" ;
-  string fileName = "WGGJets_TuneCUETP8M1_13TeV_madgraphMLM_pythia8_Summer16.root" ;
-  string fileName = "WGToLNuG_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
-  string fileName = "WHiggs0PHToWW_2LFilter_M-125_13TeV-JHUGenV6_pythia8_Summer16.root" ;
-  string fileName = "WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
-  string fileName = "WWG_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "WWTo2L2Nu_13TeV-powheg_Summer16.root" ;
-  string fileName = "WWTo2L2Nu_DoubleScattering_13TeV-pythia8_Summer16.root" ;
-  string fileName = "WWToLNuQQ_13TeV-powheg_Summer16.root" ;
-  string fileName = "WWW_4F_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "WWZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "WZG_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "WZTo1L1Nu2Q_13TeV_amcatnloFXFX_madspin_pythia8_Summer16.root" ;
-  string fileName = "WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8_Summer16.root" ;
-  string fileName = "WZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8_Summer16.root" ;
-  string fileName = "WZTo3LNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
-  string fileName = "WZTo3LNu_TuneCUETP8M1_13TeV-powheg-pythia8_Summer16.root" ;
-  string fileName = "WZTo3LNu_mllmin01_13TeV-powheg-pythia8_ext1_Summer16.root" ;
-  string fileName = "WZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "WminusH_HToZZTo4L_M125_13TeV_powheg2-minlo-HWJ_JHUgenV6_pythia8_Summer16.root" ;
-  string fileName = "WplusH_HToZZTo4L_M125_13TeV_powheg2-minlo-HWJ_JHUgenV6_pythia8_Summer16.root" ;
-  string fileName = "ZGTo2LG_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
-  string fileName = "ZGToLLG_01J_5f_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
-  string fileName = "ZH_HToZZ_4LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUgenV6_pythia8_Summer16.root" ;
-  string fileName = "ZHiggs0PHToWW_2LFilter_M-125_13TeV-JHUGenV6_pythia8_Summer16.root" ;
-  string fileName = "ZZJJTo4L_EWK_13TeV-madgraph-pythia8_Summer16.root" ;
-  string fileName = "ZZTo2L2Nu_13TeV_powheg_pythia8_Summer16.root" ;
-  string fileName = "ZZTo2L2Nu_13TeV_powheg_pythia8_ext1_Summer16.root" ;
-  string fileName = "ZZTo2L2Q_13TeV_powheg_pythia8_Summer16.root" ;
+
+ //string fileName = "DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
+  //string fileName = "DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
+  //string fileName = "DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
+  //string fileName = "DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
+  //string fileName = "GluGluHToWWTo2L2Nu_M125_13TeV_amcatnloFXFX_pythia8_Summer16.root" ;
+  //string fileName = "GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_Summer16.root" ;
+  //string fileName = "GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8_Summer16.root" ;
+  //string fileName = "GluGluToContinToZZTo2e2nu_13TeV_MCFM701_pythia8_Summer16.root" ;
+  //string fileName = "GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8_Summer16.root" ;
+  //string fileName = "GluGluToContinToZZTo2mu2nu_13TeV_MCFM701_pythia8_Summer16.root" ;
+  //string fileName = "GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8_Summer16.root" ;
+  //string fileName = "GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8_Summer16.root" ;
+  //string fileName = "GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8_Summer16.root" ;
+  //string fileName = "GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8_Summer16.root" ;
+ //string fileName = "GluGluWWTo2L2Nu_MCFM_13TeV_Summer16.root" ;
+ //string fileName = "GluGluZH_HToWW_M125_13TeV_powheg_pythia8_Summer16.root" ;
+  //string fileName = "ST_s-channel_4f_InclusiveDecays_13TeV-amcatnlo-pythia8_Summer16.root" ;
+ //string fileName = "ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1_Summer16.root" ;
+  //string fileName = "ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1_Summer16.root" ;
+  //string fileName = "ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1_Summer16.root" ;
+  //string fileName = "ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1_Summer16.root" ;
+  //string fileName = "ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1_Summer16.root" ;
+  //string fileName = "ST_tWll_5f_LO_13TeV-MadGraph-pythia8_Summer16.root" ;
+  //string fileName = "ST_tWll_5f_LO_13TeV_MadGraph_pythia8_Summer16.root" ;
+  //string fileName = "ST_tWnunu_5f_LO_13TeV-MadGraph-pythia8_Summer16.root" ;
+  //string fileName = "TGJets_TuneCUETP8M1_13TeV_amcatnlo_madspin_pythia8_Summer16.root" ;
+  //string fileName = "THQ_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1_Summer16.root" ;
+  //string fileName = "THW_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1_Summer16.root" ;
+  //string fileName = "TTGG_0Jets_TuneCUETP8M1_13TeV_amcatnlo_madspin_pythia8_Summer16.root" ;
+  //string fileName = "TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_Summer16.root" ;
+  //string fileName = "TTJets_DiLept_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
+  //string fileName = "TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
+  //string fileName = "TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
+  //string fileName = "TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
+  //string fileName = "TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_Summer16.root" ;
+  //string fileName = "TTWJetsToQQ_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_Summer16.root" ; 
+  //string fileName = "TTWW_TuneCUETP8M2T4_13TeV-madgraph-pythia8_Summer16.root" ;
+  //string fileName = "TTWZ_TuneCUETP8M2T4_13TeV-madgraph-pythia8_Summer16.root" ;
+  // string fileName = "TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
+  //string fileName = "TTZToLL_M-1to10_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
+  //string fileName = "TTZZ_TuneCUETP8M2T4_13TeV-madgraph-pythia8_Summer16.root" ;
+  
+
+
+  
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+////string fileName = "TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_Summer16.root" ; that one gave error/// 
+////string fileName = "TT_TuneCUETP8M2T4_GluonMoveCRTune_13TeV-powheg-pythia8_Summer16.root" ;////// 
+////string fileName = "TT_TuneCUETP8M2T4_QCDbasedCRTune_erdON_13TeV-powheg-pythia8_Summer16.root" ;///////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  
+  
+  //string fileName = "VBFHToWWTo2L2Nu_M125_13TeV_amcatnlo_pythia8_Summer16.root" ;
+  //string fileName = "VBF_HToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8_Summer16.root" ;
+  //string fileName = "VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8_Summer16.root" ;
+  //string fileName = "WGGJets_TuneCUETP8M1_13TeV_madgraphMLM_pythia8_Summer16.root" ;
+  //string fileName = "WGToLNuG_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
+  //string fileName = "WHiggs0PHToWW_2LFilter_M-125_13TeV-JHUGenV6_pythia8_Summer16.root" ;
+  //string fileName = "WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Summer16.root" ;
+  //string fileName = "WWG_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
+  //string fileName = "WWTo2L2Nu_13TeV-powheg_Summer16.root" ;
+  //string fileName = "WWTo2L2Nu_DoubleScattering_13TeV-pythia8_Summer16.root" ;
+  //string fileName = "WWToLNuQQ_13TeV-powheg_Summer16.root" ;
+  //string fileName = "WWW_4F_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
+  //string fileName = "WWZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
+  //string fileName = "WZG_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
+  //string fileName = "WZTo1L1Nu2Q_13TeV_amcatnloFXFX_madspin_pythia8_Summer16.root" ;
+  //string fileName = "WZTo1L3Nu_13TeV_amcatnloFXFX_madspin_pythia8_Summer16.root" ;
+  //string fileName = "WZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8_Summer16.root" ;
+  //string fileName = "WZTo3LNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
+  //string fileName = "WZTo3LNu_TuneCUETP8M1_13TeV-powheg-pythia8_Summer16.root" ;
+  //string fileName = "WZTo3LNu_mllmin01_13TeV-powheg-pythia8_ext1_Summer16.root" ;
+  //string fileName = "WZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
+  //string fileName = "WminusH_HToZZTo4L_M125_13TeV_powheg2-minlo-HWJ_JHUgenV6_pythia8_Summer16.root" ;
+  //string fileName = "WplusH_HToZZTo4L_M125_13TeV_powheg2-minlo-HWJ_JHUgenV6_pythia8_Summer16.root" ;
+  //string fileName = "ZGTo2LG_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
+  //string fileName = "ZGToLLG_01J_5f_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_Summer16.root" ;
+  //string fileName = "ZH_HToZZ_4LFilter_M125_13TeV_powheg2-minlo-HZJ_JHUgenV6_pythia8_Summer16.root" ;
+  //string fileName = "ZHiggs0PHToWW_2LFilter_M-125_13TeV-JHUGenV6_pythia8_Summer16.root" ;
+  //string fileName = "ZZJJTo4L_EWK_13TeV-madgraph-pythia8_Summer16.root" ;
+  //string fileName = "ZZTo2L2Nu_13TeV_powheg_pythia8_Summer16.root" ;
+  //string fileName = "ZZTo2L2Nu_13TeV_powheg_pythia8_ext1_Summer16.root" ;
+  //string fileName = "ZZTo2L2Q_13TeV_powheg_pythia8_Summer16.root" ;
   string fileName = "ZZTo4L_13TeV_powheg_pythia8_Summer16.root" ;
-  string fileName = "ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "tZq_ll_4f_13TeV-amcatnlo-herwigpp_Summer16.root" ;
-  string fileName = "tZq_ll_4f_13TeV-amcatnlo-pythia8_Summer16.root" ;
-  string fileName = "tZq_ll_4f_ckm_NLO_13TeV-amcatnlo-herwigpp_Summer16.root" ;
-  string fileName = "ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8_Summer16.root" ;
-  */
+  //string fileName = "ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8_Summer16.root" ;
+  //string fileName = "tZq_ll_4f_13TeV-amcatnlo-herwigpp_Summer16.root" ;
+ //string fileName = "tZq_ll_4f_13TeV-amcatnlo-pythia8_Summer16.root" ;
+ // string fileName = "tZq_ll_4f_ckm_NLO_13TeV-amcatnlo-herwigpp_Summer16.root" ;
+  //string fileName = "ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8_Summer16.root" ;
+  
+
+
   fChain->Add(Form("%s/%s/%s",inputPath.c_str(),fileName.c_str(),tree.c_str()));
 
   string outputPath ="output";
@@ -180,12 +195,15 @@ int main(){
   //////selection cuts
 
   Float_t isoCut = 0.15;
+  bool is2017 = false;
   bool isMC = true;
   float Zmass = 90;
 
   //if I want to use a TChain.....
   //cout<< "starting..."<<endl;
   //TChain * fChain = new TChain("blackJackAndHookers/blackJackAndHookersTree",""); //okara
+
+  //oldtree->Add("/eos/cms/store/group/phys_exotica/HNL/Data/SingleMuon/crab_Run_2016B-v3_SingleMuon/Data_Analysis10.root/HeavyNeutralLepton/tree_");
 
 //=============================================================================================//
 
@@ -194,6 +212,9 @@ int main(){
   //Create a new file + a clone of old tree in new file 
   //TTree *newtree = oldtree->CloneTree(0); 
   TTree *newtree1  = new TTree("tree_4lep","Analysis Tree");
+
+  //cout<<"cloning done"<<endl;
+
   // Long64_t nentries = oldtree->GetEntries();
   Long64_t nentries = fChain->GetEntries();
   cout  <<nentries<<endl;
@@ -201,6 +222,7 @@ int main(){
 //======================= Old Tree Variables ==========================================// 
   // These are the variables I cut on 
    // OZGUN ADD it 
+
 
    ULong64_t       _runNb;
    ULong64_t       _lumiBlock;
@@ -344,8 +366,8 @@ int main(){
    UInt_t          _lProvenanceCompressed[11];   //[_nL]
 
 
-   ///////////////fChain part////////////////////
-   
+
+   fChain->SetBranchAddress("_runNb", &_runNb);
    fChain->SetBranchAddress("_lumiBlock", &_lumiBlock);
    fChain->SetBranchAddress("_eventNb", &_eventNb);
    fChain->SetBranchAddress("_nVertex", &_nVertex);
@@ -528,7 +550,8 @@ int main(){
 
  // =================================  DiLeptons branches ===========================================//   
 
- Float_t DilepMass1, DilepMass2, DilepMass3, DilepMass4, DilepMass5, DilepMass6;
+   Float_t DilepMass1, DilepMass2, DilepMass3, DilepMass4, DilepMass5, DilepMass6;
+   Int_t Jet_Count,bJet_Count;
 
  TBranch* branch_DilepMass1_tree1 = newtree1->Branch("DilepMass1",&DilepMass1 ,"DilepMass1/F");
  TBranch* branch_DilepMass2_tree1 = newtree1->Branch("DilepMass2",&DilepMass2 ,"DilepMass2/F");
@@ -537,6 +560,8 @@ int main(){
  TBranch* branch_DilepMass5_tree1 = newtree1->Branch("DilepMass5",&DilepMass5 ,"DilepMass5/F");
  TBranch* branch_DielpMass6_tree1 = newtree1->Branch("DilepMass6",&DilepMass6 ,"DilepMass6/F");
 
+ TBranch* branch_Jet_Count = newtree1->Branch("Jet_Count",&Jet_Count ,"Jet_Count/I"); 
+ TBranch* branch_bJet_Count = newtree1->Branch("bJet_Count",&bJet_Count ,"bJet_Count/I");
 
 //======================= Start the running over input branches ==========================================//
  for (int i=0;i<fChain->GetEntries(); i++) {
@@ -601,11 +626,20 @@ int main(){
       }
     }
 
+///////////////////////jet counting////////////////////////////////////
+
+        Int_t  jetcount = 0;
+	Int_t bjet = 0;
+	Float_t  wp = (is2017) ? 0.4941 : 0.6324;
+        for(unsigned i=0; i < _nJets ; i++){
+          if(_jetSmearedPt[i] < 30 && abs(_jetEta[i]) > 2.4 && !_jetIsTight[i]) continue;
+	  jetcount++;
+	 if(_jetDeepCsv_b[i] > wp ) bjet++;
+     }
 
 
 
     //if( thirdlep != -1)   cout <<"3rdPt =  "<<_lPt[thirdlep]<<endl;
-  
     //cout<<"==================== end of the event ================"<<endl;
 
 
@@ -708,6 +742,8 @@ int main(){
         DilepMass5 = DiLepMass5 ;
 	DilepMass6 = DiLepMass6 ;
 
+	Jet_Count = jetcount;
+	bJet_Count = bjet;
 	newtree1->Fill();
       }
       }

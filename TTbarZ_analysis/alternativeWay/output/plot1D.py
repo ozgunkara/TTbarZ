@@ -91,6 +91,10 @@ parser.add_option( "--xmax", dest="xmax",
 		                    help="maximum x for variable",
 		                    action="store",type="float",default = 100)
 
+parser.add_option( "--setmax", dest="setmax",
+                                    help="maximum y for limit",
+                                    action="store",type="float",default = 5000000000)
+
 parser.add_option( "--xlabel", dest="xlabel",
 		                    help="label for the x axis",
 		                    action="store",type="string",default = "variable")
@@ -250,7 +254,7 @@ for key in stacks.keys():
             if samp.hist.Integral() > 0 and not samp.isData:
                 #scale_factor = float(options.lumi) * float(samp.xsec) / float(samp.total_events)
                 scale_factor = float(options.lumi) * float(samp.xsec)
-                
+	############################calculation for scale factor##################################                
                 if options.norm1:
                     scale_factor = 1 / samp.hist.Integral()
                 
@@ -296,7 +300,7 @@ for key in stacks.keys():
     hs.GetXaxis().SetTitle(options.xlabel)
     hs.GetYaxis().SetTitle(options.ylabel)
     hs.SetMinimum(1)
-    hs.SetMaximum(5000000000)
+    hs.SetMaximum(options.setmax)
 
     
 else:
